@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { Phone, ArrowUpRight, Menu, X, ShieldCheck } from "lucide-react";
+import { Phone, ArrowUpRight, Menu, X, ShieldCheck, Sun, Moon } from "lucide-react";
 import { agencyData } from "../data/agency";
 import { useAudit } from "../context/AuditContext";
+import { useTheme } from "../context/ThemeContext";
 
 export const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { openAuditModal } = useAudit();
+  const { theme, toggleTheme } = useTheme();
   const location = useLocation();
 
   // Handle scroll detection for glass backdrop blur & border transition
@@ -89,6 +91,14 @@ export const Header: React.FC = () => {
 
         {/* Right: Desktop Phone & Pilot CTA */}
         <div className="hidden lg:flex items-center gap-6">
+          <button
+            onClick={toggleTheme}
+            className="p-2 rounded-full hover:bg-secondary text-foreground hover:scale-105 transition-all duration-200 cursor-pointer"
+            aria-label="Toggle theme"
+          >
+            {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+          </button>
+
           <a
             href={agencyData.phoneHref}
             className="flex items-center gap-2 text-sm font-medium text-foreground hover:text-accent transition-colors group"
@@ -110,6 +120,14 @@ export const Header: React.FC = () => {
 
         {/* Mobile: Hamburger Menu Toggle */}
         <div className="flex items-center gap-2 lg:hidden">
+          <button
+            onClick={toggleTheme}
+            className="p-2.5 rounded-full bg-secondary text-primary hover:bg-primary hover:text-primary-foreground transition-colors cursor-pointer"
+            aria-label="Toggle theme"
+          >
+            {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+          </button>
+
           <a
             href={agencyData.phoneHref}
             aria-label="Call Auxim"
