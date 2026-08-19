@@ -40,6 +40,7 @@ export const LiveDemo: React.FC = () => {
   const [inputValue, setInputValue] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
+  const isFirstRender = useRef(true);
   const { openAuditModal } = useAudit();
 
   const scrollToBottom = () => {
@@ -47,6 +48,10 @@ export const LiveDemo: React.FC = () => {
   };
 
   useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
     scrollToBottom();
   }, [messages, isTyping]);
 
